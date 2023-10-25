@@ -91,14 +91,15 @@ gridCanvas.addEventListener("click", (e) => {
 // Loop through the selectable tiles and draw textures in each cell
 function drawSelectCanvas()
 {
+    
     for (let i = 0; i < numSelectables; i++) {
         const selectableImage = new Image();
         selectableImage.src = imageUrls[i];
-        drawTexture(0, i, selectCtx, selectableImage, selectCanvas.width, selectHeight, 64);
+        drawTexture(0, i, selectCtx, i, selectCanvas.width, selectHeight, 64);
     }
 }
 
 selectCanvas.addEventListener("click", (e) => {
     const coordY = Math.trunc(e.offsetY / selectHeight);
-    currentTile = imageUrls[coordY];
+    currentTile = coordY;
 })
