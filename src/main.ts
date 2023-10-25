@@ -34,7 +34,7 @@ const selectHeight = selectCanvas.height / numSelectables;
 
 
 //creating the tilemap nested array
-let tilemap: HTMLImageElement[][] = new Array(numTiles);
+let tilemap: number[][] = new Array(numTiles);
 
 for(let i = 0; i < numTiles; i++) {
     let row = new Array(numTiles);
@@ -46,7 +46,7 @@ for(let i = 0; i < numTiles; i++) {
 }
 
 //track the selected tile
-let currentTile = "/tile1.png";
+let currentTile:number = 1;
 
 //draw the initial canvases
 redrawTilemap();
@@ -54,11 +54,13 @@ drawSelectCanvas();
 
 
 //Function that draws a texture to a specific canvas ctx
-function drawTexture(row: number, col: number, ctx: CanvasRenderingContext2D, image: HTMLImageElement, width: number, height: number, cellSize: number) {
-    image.onload = () => {
-        ctx.drawImage(image, row * cellSize, col * cellSize, width, height)
+function drawTexture(row: number, col: number, ctx: CanvasRenderingContext2D, imageNum: number, width: number, height: number, cellSize: number) {
+    const selectableImage = new Image();
+    selectableImage.src = imageUrls[imageNum];
+    selectableImage.onload = () => {
+        ctx.drawImage(selectableImage, row * cellSize, col * cellSize, width, height)
     };
-    ctx.drawImage(image, row * cellSize, col * cellSize, width, height)
+    ctx.drawImage(selectableImage, row * cellSize, col * cellSize, width, height)
 }
 
 
@@ -79,7 +81,7 @@ gridCanvas.addEventListener("click", (e) => {
     const coordX = Math.trunc(e.offsetX / tileSize);
     const coordY = Math.trunc(e.offsetY / tileSize);
 
-    tilemap[coordX][coordY].src = currentTile;
+    tilemap[coordX][coordY] = currentTile;
     redrawTilemap();
 })
 
